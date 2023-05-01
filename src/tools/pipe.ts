@@ -12,10 +12,10 @@ type Task = {
 };
 
 namespace Task {
-  export function create(id: string, name: string): Task {
+  export function create({ id, name }: Partial<Task>): Task {
     return {
-      id,
-      name,
+      id: id || Math.random().toString(36).substr(2, 9),
+      name: name!,
       stats: Status.NEW,
     };
   }
@@ -34,7 +34,12 @@ namespace Task {
 }
 
 const me = "1";
-const task = Task.create("1", "Buy milk");
-const assignableTask = Task.assign(me);
-const assignedTask = assignableTask(task);
-console.log(Task.printable(assignedTask));
+
+const pipe =
+  <T>(...fns: Array<(arg: T) => T>) =>
+  (arg: T) =>
+    fns.reduce((prev, fn) => fn(prev), arg);
+
+const assignedPipe = pipe(Task.create, Task.assign("1"));
+
+console.log(Task.printable(assignedPipe({ name: "Task 1", id: "1" } as Task)));
