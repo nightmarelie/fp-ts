@@ -20,12 +20,12 @@ namespace Task {
     };
   }
 
-  export function assign(task: Task, userId: string): Task {
-    return {
+  export function assign(userId: string): (task: Task) => Task {
+    return (task: Task) => ({
       ...task,
       stats: Status.ASSIGNED,
       assignedTo: userId,
-    };
+    });
   }
 
   export function printable(task: Task): string {
@@ -35,5 +35,6 @@ namespace Task {
 
 const me = "1";
 const task = Task.create("1", "Buy milk");
-const assignedTask = Task.assign(task, me);
+const assignableTask = Task.assign(me);
+const assignedTask = assignableTask(task);
 console.log(Task.printable(assignedTask));
