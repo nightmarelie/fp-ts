@@ -1,4 +1,4 @@
-import { pipe } from "./tools";
+import { pipe, curry } from "./tools";
 
 enum Status {
   NEW = "NEW",
@@ -22,12 +22,12 @@ namespace Task {
     };
   }
 
-  export function assign(userId: string): (task: Task) => Task {
-    return (task: Task) => ({
+  export function assign(userId: string, task: Task): Task {
+    return {
       ...task,
       stats: Status.ASSIGNED,
       assignedTo: userId,
-    });
+    };
   }
 
   export function printable(task: Task): string {
@@ -37,6 +37,9 @@ namespace Task {
 
 const me = "1";
 
-const assignedPipe = pipe(Task.create, Task.assign("1"));
+const assignToMe = curry(Task.assign, me);
+const createInitialTask = Task.create;
+
+const assignedPipe = pipe(createInitialTask, assignToMe);
 
 console.log(Task.printable(assignedPipe({ name: "Task 1", id: "1" } as Task)));
