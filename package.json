@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "test": "ts-node -- "
+  },
   "dependencies": {
     "fp-ts": "^2.14.0",
     "ts-node": "^10.9.1"
