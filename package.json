@@ -4,10 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "ts-node -- "
+    "test": "ts-node -- ",
+    "jest": "jest"
   },
   "dependencies": {
     "fp-ts": "^2.14.0",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "@types/jest": "^29.5.1",
+    "typescript": "^5.0.4"
   }
 }
